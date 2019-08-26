@@ -1,0 +1,43 @@
+// out: main.css
+
+.console-text {
+    color: #00ff00;
+    background-color: black;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    background-color: black;
+    overflow: hidden;
+    #app-wrapper {
+        height: 250px;
+        width: 340px;
+        overflow-y: scroll;
+        position: absolute;
+        left: 700px;
+        top: 190px;
+        background-color: black;
+    }
+    div.window-log {
+        div.entry-log {
+            .console-text;
+            word-wrap: break-word;
+        }
+    }
+    div.pre-input {
+        display: inline-block;
+        .console-text;
+    }
+    #input-console {
+        .console-text;
+        border-style: none;
+        display: inline-block;
+        margin: 0;
+        padding: 0;
+    }
+}

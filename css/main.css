@@ -1,0 +1,46 @@
+.console-text {
+  color: #00ff00;
+  background-color: black;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+*:focus {
+  outline: none;
+}
+body {
+  background-color: black;
+  overflow: hidden;
+}
+body #app-wrapper {
+  height: 250px;
+  width: 340px;
+  overflow-y: scroll;
+  position: absolute;
+  left: 700px;
+  top: 190px;
+  background-color: black;
+}
+body div.window-log div.entry-log {
+  color: #00ff00;
+  background-color: black;
+  font-family: sans-serif;
+  font-size: 15px;
+  word-wrap: break-word;
+}
+body div.pre-input {
+  display: inline-block;
+  color: #00ff00;
+  background-color: black;
+  font-family: sans-serif;
+  font-size: 15px;
+}
+body #input-console {
+  color: #00ff00;
+  background-color: black;
+  font-family: sans-serif;
+  font-size: 15px;
+  border-style: none;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
