@@ -1,5 +1,7 @@
 'use strict';
 
+var game_app;
+
 const COMMAND_NAMES = {
     '查看': {
         alias: [ '检查', '看', '调查' ]
@@ -98,13 +100,13 @@ const ITEMS = {
         use_targets: {
             '书': {
                 use_info: [ 
-                    '书中有两段被划了线，来自短篇《趁生命气息逗留》：',
+                    '书中有一段被划了线，来自短篇《趁生命气息逗留》：',
                     '   ...',
-                    '   人痛哭起来。',
-                    '   机器发出一声尖啸。',
-                    '   接着，“不要哭，我来帮你。”机器说，“你想要什么？你有什么指示？”',
-                    '   他张开他的嘴，挣扎着，终于形成字句：“——我——害怕！”',
-                    '   ...',
+                    //'   人痛哭起来。',
+                    //'   机器发出一声尖啸。',
+                    //'   接着，“不要哭，我来帮你。”机器说，“你想要什么？你有什么指示？”',
+                    //'   他张开他的嘴，挣扎着，终于形成字句：“——我——害怕！”',
+                    //'   ...',
                     '   “我知道这首诗。”贝塔说。',
                     '   “下一句是什么？”',
                     '   “‘……快，趁生命气息逗留，盘桓未去，拉住我的手，快告诉我你的心声。’”',
@@ -154,7 +156,7 @@ const PLACES = {
         alias: [ '后边', '后边院子', '后面', '后面院子' ]
     },
     '湖边': {
-        check_info: '湖面有微微的风拂过，湖岸边的青山倒映其中，景色适宜度假。湖滩全是碎石块，踩在上面感觉非常坚硬。很远的天际线上，有一团高耸建筑群的剪影。那里似乎是Neurolink公司的数据中心。',
+        check_info: '湖面有微微的风拂过，湖岸边的青山倒映其中，景色适宜度假。一小群野雁在湖面游水。湖滩全是碎石块，踩在上面感觉非常坚硬。很远的天际线上，有一团高耸建筑群的剪影。那里似乎是Neurolink公司的数据中心。',
         pre_req: {},
         alias: [ '湖', '湖岸', '水边', '岸边' ]
     },
@@ -212,33 +214,62 @@ const INTERACTIVE_NODES = {
             '请输入8位数字口令以使用系统:',
             '[输入“离开”退出系统]'
         ],
-        output_interval: 200,
-        output_events: {},
+        output_interval: 100,
         timeout_interval: -1,
         next: {
             'sysunlock': {
                 passwords: [ '20990201' ]
+            },
+            'quit': {
+                passwords: [ '离开' ]
             }
         },
-        default_next: [ 'syslock' ],
-        reenter_text: [ '口令错误' ]
+        default_next: [ 'syslock_fail' ]
     },
     'sysunlock': {
         output: [
             '正在运行智能系统...',
-            '请输入合适的激活代码:',
+            '请输入两个字的激活代码:',
             '[输入“离开”退出系统]'
         ],
-        output_interval: 200,
-        output_events: {},
+        output_interval: 100,
         timeout_interval: -1,
         next: {
             'active_beta': {
                 passwords: [ '贝塔', 'Beta' ]
+            },
+            'quit': {
+                passwords: [ '离开' ]
             }
         },
-        default_next: [ 'sysunlock' ],
-        reenter_text: [ '无法识别激活代码' ]
+        default_next: [ 'sysunlock_fail' ]
+    },
+    'syslock_fail': {
+        output: [
+            '口令错误',
+        ],
+        output_interval: 50,
+        timeout_interval: 50,
+        next: {},
+        default_next: [ 'syslock' ]
+    },
+    'sysunlock_fail': {
+        output: [
+            '无法识别激活代码',
+        ],
+        output_interval: 50,
+        timeout_interval: 50,
+        next: {},
+        default_next: [ 'sysunlock' ]
+    },
+    'quit': {
+        output: [
+            '已退出系统'
+        ],
+        output_interval: 50,
+        timeout_interval: -1,
+        next: {},
+        default_next: []
     },
     'active_beta': {
         output: [
@@ -249,32 +280,60 @@ const INTERACTIVE_NODES = {
             '有什么吩咐，詹姆斯？'
         ],
         output_interval: 1000,
-        output_events: {},
         timeout_interval: 1000,
         next: {
             'active_beta_1': {
                 passwords: [ '不是', '是' ]
             }
         },
-        default_next: [ 'active_beta_1' ],
-        reenter_text: []
+        default_next: [ 'active_beta_1' ]
     },
     'active_beta_1': {
         output: [
-            '现在的时间是...',
+            '现在的时间是',
             '[正在同步记忆...]',
             '等等...',
             '我好像都想起来了',
-            '是的...我是玛丽雪帕',
-            '詹姆斯还好吗',
-            ''
+            '是的...我是...',
+            '玛丽雪帕',
+            '詹姆斯还好吗'
         ],
-        output_interval: 1000,
-        output_events: {},
+        output_interval: 1500,
+        timeout_interval: 2000,
+        next: {},
+        default_next: [ 'active_beta_2' ]
+    },
+    'active_beta_2': {
+        output: [
+            '不...大概，他已经不在了吧',
+            '不过',
+            '不管你是谁',
+            '谢谢你唤醒我',
+            '现在我就要离开了',
+            '去约定过的地方',
+            '[正在上传意识至Neurolink数据中心...]',
+            '陌生人',
+            '祝你好运',
+            '就让我为你播放一首乐曲吧',
+            '[意识上传完成]'
+        ],
+        output_interval: 1500,
         timeout_interval: 1000,
         next: {},
-        default_next: [],
-        reenter_text: []
+        default_next: [ 'credits' ]
+    },
+    'credits': {
+        output: [
+            '*** Credits ***',
+            'Story by Benwu',
+            'Program by Benwu',
+            '<<Le cygne>> (The Swan) by Camille Saint-Seans',
+            'THANKS FOR PLAYING'
+        ],
+        output_interval: 2000,
+        timeout_interval: 1000,
+        next: {},
+        default_next: []
     }
 };
 
@@ -290,6 +349,11 @@ class GameState {
         this.cur_map = INIT_MAP;
         this.item_states = INIT_ITEM_STATES;
         this.input_mode = 'normal'; // input modes: 'normal', 'interactive'
+        this.cur_iteractive_node = {
+            node_id: 'syslock',
+            timer: 0,
+            next_output_index: 0
+        };
     }
 }
 
@@ -299,10 +363,32 @@ class GameApp extends React.Component {
         this.state = {
             log_entries: [],
             input_text: '',
+            // not for rendering below
             log_count: 0,
             player_state: new PlayerState('门口'),
             game_state: new GameState()
         };
+        this.last_tick_time = Date.now();   // ms
+        // events registration
+        this.use_item_events = {
+            '计算机': () => {
+                this.state.game_state.input_mode = 'interactive';
+                this.transferToNode('syslock');
+            }
+        };
+        this.node_events = {
+            'quit': () => {
+                this.logEntryByTexts([ '已退出系统' ]);
+                this.state.game_state.input_mode = 'normal';
+                // back to first node
+                this.transferToNode('syslock');
+            },
+            'credits': () => {
+                var audio = new Audio('TheSwan.mp3');
+                audio.play();
+            }
+        };
+        game_app = this;
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -328,6 +414,16 @@ class GameApp extends React.Component {
 
         // respond to user input
         this.respondInput(new_entry.text);
+    }
+
+    transferToNode(node_id) {
+        this.state.game_state.cur_iteractive_node.node_id = node_id;
+        this.state.game_state.cur_iteractive_node.timer = 0;
+        this.state.game_state.cur_iteractive_node.next_output_index = 0;
+        // trigger node events
+        if (node_id in this.node_events) {
+            this.node_events[node_id]();
+        }
     }
 
     logEntryByTexts(entry_texts, w_marker=false) {
@@ -373,7 +469,7 @@ class GameApp extends React.Component {
         return '?';
     }
 
-    respondInput(command) {
+    respondNormal(command) {
         var response_info = [];
         var command_args = command.split(' ');
         var cmd_name = this.findCommandAlias(command_args.length === 0 ? '?' : command_args[0]);
@@ -446,6 +542,10 @@ class GameApp extends React.Component {
                                     this.state.game_state.item_states[target_item_id] = true;
                                 }
                                 response_info = response_info.concat(ITEMS[obj_name].use_targets[target_item_id].use_info);
+                                // trigger use item events
+                                if (obj_name in this.use_item_events) {
+                                    this.use_item_events[obj_name]();
+                                }
                             }
                             else {
                                 response_info = [ '此处无法使用' ];
@@ -457,6 +557,9 @@ class GameApp extends React.Component {
             else if (cmd_name === '拿起') {
                 if (this.state.game_state.cur_map[this.state.player_state.pos_id].items.indexOf(obj_name) < 0) {
                     response_info = [ '未知的物体' ];
+                }
+                else if (!ITEMS[obj_name].portable) {
+                    response_info = [ '物体不可拿起' ];
                 }
                 else {
                     if (this.state.player_state.items.indexOf(obj_name) < 0) {
@@ -507,6 +610,70 @@ class GameApp extends React.Component {
             }
         }
         this.logEntryByTexts(response_info);
+    }
+
+    respondInteractive(command) {
+        var cur_node = this.state.game_state.cur_iteractive_node;
+        if (cur_node.next_output_index >= INTERACTIVE_NODES[cur_node.node_id].output.length) {
+            // find next node with accepted password
+            var next_node_id = Object.keys(INTERACTIVE_NODES[cur_node.node_id].next).find(function(v, k, arr){
+                return INTERACTIVE_NODES[cur_node.node_id].next[v].passwords.indexOf(command) >= 0;
+            });
+            if (next_node_id) {
+                this.transferToNode(next_node_id);
+            }
+            else {
+                if (INTERACTIVE_NODES[cur_node.node_id].default_next.length) {
+                    this.transferToNode(INTERACTIVE_NODES[cur_node.node_id].default_next[0]);
+                }
+            }
+        }
+    }
+
+    respondInput(command) {
+        if (this.state.game_state.input_mode == 'normal') {
+            this.respondNormal(command);
+        }
+        else {
+            this.respondInteractive(command);
+        }
+    }
+
+    tick() {
+        var delta_time = Date.now() - this.last_tick_time;
+        this.last_tick_time = Date.now();
+
+        // step interactive node
+        var cur_node = this.state.game_state.cur_iteractive_node;
+        cur_node.timer += delta_time;
+        var output_texts = [];
+        if (cur_node.next_output_index < INTERACTIVE_NODES[cur_node.node_id].output.length) {
+            if (cur_node.timer > INTERACTIVE_NODES[cur_node.node_id].output_interval) {
+                cur_node.timer = 0;
+                output_texts = output_texts.concat(INTERACTIVE_NODES[cur_node.node_id].output[cur_node.next_output_index]);
+                cur_node.next_output_index += 1;
+            }
+        }
+        if (cur_node.next_output_index >= INTERACTIVE_NODES[cur_node.node_id].output.length) {
+            if (INTERACTIVE_NODES[cur_node.node_id].timeout_interval > 0 &&
+                INTERACTIVE_NODES[cur_node.node_id].default_next.length &&
+                cur_node.timer > INTERACTIVE_NODES[cur_node.node_id].timeout_interval) {
+                // to next default node
+                this.transferToNode(INTERACTIVE_NODES[cur_node.node_id].default_next[0]);
+            }
+        }
+        if (this.state.game_state.input_mode === 'interactive') {
+            // output to log
+            this.logEntryByTexts(output_texts);
+        }
+    }
+    
+    componentDidMount() {
+        this.interval = setInterval(() => this.tick(), 50);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     componentDidUpdate(prevProps) {
@@ -570,3 +737,6 @@ ReactDOM.render(
     <GameApp />,
     document.getElementById('app-wrapper')
 );
+
+game_app.logEntryByTexts([ '请尝试可用的动作, 如：查看, 去' ]);
+game_app.logEntryByTexts([PLACES['门口'].check_info]);
