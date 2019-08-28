@@ -1,6 +1,6 @@
 .console-text {
   color: #00ff00;
-  background-color: black;
+  background-color: #112222;
   font-family: sans-serif;
   font-size: 15px;
 }
@@ -8,39 +8,56 @@
   outline: none;
 }
 body {
-  background-color: black;
+  background-color: #112222;
   overflow: hidden;
 }
 body #app-wrapper {
   height: 250px;
   width: 340px;
-  overflow-y: scroll;
+  overflow: hidden;
   position: absolute;
   left: 700px;
   top: 190px;
-  background-color: black;
+  background-color: #112222;
+}
+body #app-wrapper div#app-main {
+  overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: -17px;
 }
 body div.window-log div.entry-log {
   color: #00ff00;
-  background-color: black;
+  background-color: #112222;
   font-family: sans-serif;
   font-size: 15px;
   word-wrap: break-word;
+  min-height: 1.5em;
 }
 body div.pre-input {
   display: inline-block;
   color: #00ff00;
-  background-color: black;
+  background-color: #112222;
   font-family: sans-serif;
   font-size: 15px;
 }
 body #input-console {
   color: #00ff00;
-  background-color: black;
+  background-color: #112222;
   font-family: sans-serif;
   font-size: 15px;
   border-style: none;
   display: inline-block;
   margin: 0;
   padding: 0;
+}
+body img#img-scanlines {
+  position: absolute;
+  left: 700px;
+  top: 190px;
+  width: 340px;
+  pointer-events: none;
+  opacity: 0.25;
 }

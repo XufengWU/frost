@@ -1,8 +1,15 @@
 // out: main.css
 
+@screen-back-color: #112222;
+
+@screen-pos-x: 700px;
+@screen-pos-y: 190px;
+@screen-width: 340px;
+@screen-height: 250px;
+
 .console-text {
     color: #00ff00;
-    background-color: black;
+    background-color: @screen-back-color;
     font-family: sans-serif;
     font-size: 15px;
 }
@@ -12,21 +19,30 @@
 }
 
 body {
-    background-color: black;
+    background-color: @screen-back-color;
     overflow: hidden;
     #app-wrapper {
-        height: 250px;
-        width: 340px;
-        overflow-y: scroll;
+        height: @screen-height;
+        width: @screen-width;
+        overflow: hidden;
         position: absolute;
-        left: 700px;
-        top: 190px;
-        background-color: black;
+        left: @screen-pos-x;
+        top: @screen-pos-y;
+        background-color: @screen-back-color;
+        div#app-main {
+            overflow-y: scroll;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: -17px;
+        }
     }
     div.window-log {
         div.entry-log {
             .console-text;
             word-wrap: break-word;
+            min-height: 1.5em;
         }
     }
     div.pre-input {
@@ -39,5 +55,13 @@ body {
         display: inline-block;
         margin: 0;
         padding: 0;
+    }
+    img#img-scanlines {
+        position: absolute;
+        left: @screen-pos-x;
+        top: @screen-pos-y;
+        width: @screen-width;
+        pointer-events: none;
+        opacity: 0.25;
     }
 }

@@ -31,7 +31,8 @@ const ITEMS = {
                 use_info: [ '锁已被打开。' ]
             }
         },
-        alias: [ '石块', '石', '岩石', '石子' ]
+        alias: [ '石块', '石', '岩石', '石子', '碎石' ],
+        use_alias: []
     },
     '电闸': {
         usable: true,
@@ -46,7 +47,8 @@ const ITEMS = {
                 use_info: [ '电闸已经打开。' ]
             }
         },
-        alias: [ '闸门', '闸' ]
+        alias: [ '闸门', '闸' ],
+        use_alias: [ '拉', '拉起', '打开', '开启' ]
     },
     '锁': {
         usable: false,
@@ -57,7 +59,8 @@ const ITEMS = {
         },
         pre_req: {},
         use_targets: {},
-        alias: [ '门锁', '金属锁', '铁锁', '铜锁' ]
+        alias: [ '门锁', '金属锁', '铁锁', '铜锁' ],
+        use_alias: []
     },
     '计算机': {
         usable: true,
@@ -76,7 +79,8 @@ const ITEMS = {
                 use_info: [ '' ]
             }
         },
-        alias: [ '电脑' ]
+        alias: [ '电脑' ],
+        use_alias: [ '打开', '开启' ]
     },
     '唱片机': {
         usable: false,
@@ -87,7 +91,8 @@ const ITEMS = {
         },
         pre_req: {},
         use_targets: {},
-        alias: [ '唱片', '播放机' ]
+        alias: [ '唱片', '播放机' ],
+        use_alias: []
     },
     '书': {
         usable: true,
@@ -100,13 +105,13 @@ const ITEMS = {
         use_targets: {
             '书': {
                 use_info: [ 
-                    '书中有一段被划了线，来自短篇《趁生命气息逗留》：',
+                    '书中有两段被划了线，来自短篇《趁生命气息逗留》：',
                     '   ...',
-                    //'   人痛哭起来。',
-                    //'   机器发出一声尖啸。',
-                    //'   接着，“不要哭，我来帮你。”机器说，“你想要什么？你有什么指示？”',
-                    //'   他张开他的嘴，挣扎着，终于形成字句：“——我——害怕！”',
-                    //'   ...',
+                    '   人痛哭起来。',
+                    '   机器发出一声尖啸。',
+                    '   接着，“不要哭，我来帮你。”机器说，“你想要什么？你有什么指示？”',
+                    '   他张开他的嘴，挣扎着，终于形成字句：“——我——害怕！”',
+                    '   ...',
                     '   “我知道这首诗。”贝塔说。',
                     '   “下一句是什么？”',
                     '   “‘……快，趁生命气息逗留，盘桓未去，拉住我的手，快告诉我你的心声。’”',
@@ -119,7 +124,8 @@ const ITEMS = {
                 ]
             }
         },
-        alias: [ '短篇集', '小说', '书本', '本子' ]
+        alias: [ '短篇集', '小说', '书本', '本子' ],
+        use_alias: [ '读', '阅读' ]
     },
     '墓碑': {
         usable: false,
@@ -130,13 +136,50 @@ const ITEMS = {
         },
         pre_req: {},
         use_targets: {},
-        alias: [ '墓', '碑', '石碑', '墓地', '坟墓', '碑文' ]
+        alias: [ '墓', '碑', '石碑', '墓地', '坟墓', '碑文' ],
+        use_alias: []
+    },
+    '门': {
+        usable: false,
+        portable: false,
+        check_info: {
+            on: '屋子的门。老旧木板有些开裂，却还算坚固。',
+            off: '屋子的门。老旧木板有些开裂，却还算坚固。'
+        },
+        pre_req: {},
+        use_targets: {},
+        alias: [ '房门' ],
+        use_alias: []
+    },
+    '骸骨': {
+        usable: false,
+        portable: false,
+        check_info: {
+            on: '已经只剩白骨的遗骸，周围有一些用途不明的仪器。',
+            off: '已经只剩白骨的遗骸，周围有一些用途不明的仪器。'
+        },
+        pre_req: {},
+        use_targets: {},
+        alias: [ '遗骨', '尸体', '骨头', '白骨', '遗骸' ],
+        use_alias: []
+    },
+    '仪器': {
+        usable: false,
+        portable: false,
+        check_info: {
+            on: '不知有何用处的仪器散落在床的四周。主人生前似乎研究着什么。',
+            off: '不知有何用处的仪器散落在床的四周。主人生前似乎研究着什么。'
+        },
+        pre_req: {},
+        use_targets: {},
+        alias: [],
+        use_alias: []
     }
 };
 
 const PLACES = {
     '门口': {
-        check_info: '这是屋子的正门口。屋子对着南面，左手边是西院，右手边是东院。周围树林环抱，时有鸟鸣，人类的痕迹从这里看已经十分稀少。',
+        check_info: '这是屋子的门口，门上锁着锈蚀的锁。屋子对着南面，左手边是西院，右手边是东院。周围树林环抱，时有鸟鸣，人类的痕迹从这里看已经十分稀少。',
         pre_req: {},
         alias: [ '正门', '大门', '门', '入口', '南门' ]
     },
@@ -146,7 +189,7 @@ const PLACES = {
         alias: [ '西边', '西边院子', '西面', '西面院子' ]
     },
     '东院': {
-        check_info: '东边的场地略微开阔，一颗橘子树生长的很好。白色淡雅的橘子花已经开了许多。这棵树和环境并不一致，大概是被有意栽植的。树荫底下是连着后院的通路。',
+        check_info: '东边的场地略微开阔，一棵橘子树生长的很好。白色淡雅的橘子花已经开了许多。这棵树和环境并不一致，大概是被有意栽植的。树荫底下是连着后院的通路。',
         pre_req: {},
         alias: [ '东边', '东边院子', '东面', '东面院子' ]
     },
@@ -156,7 +199,7 @@ const PLACES = {
         alias: [ '后边', '后边院子', '后面', '后面院子' ]
     },
     '湖边': {
-        check_info: '湖面有微微的风拂过，湖岸边的青山倒映其中，景色适宜度假。一小群野雁在湖面游水。湖滩全是碎石块，踩在上面感觉非常坚硬。很远的天际线上，有一团高耸建筑群的剪影。那里似乎是Neurolink公司的数据中心。',
+        check_info: '湖面有微微的风拂过，湖岸边的青山倒映其中，景色适宜度假。一小群野雁在湖面游水。湖滩全是碎石块，踩在上面感觉非常坚硬。很远的天际线上，有一团高耸建筑群的剪影。那里似乎是Neurolink公司的数据中心。那场事故之后，中心周围已经越来越荒芜了。',
         pre_req: {},
         alias: [ '湖', '湖岸', '水边', '岸边' ]
     },
@@ -174,10 +217,10 @@ const PLACES = {
 const INIT_MAP = {
     '门口': {
         next: ['西院', '屋内', '东院'],
-        items: ['锁']
+        items: ['锁', '门']
     },
     '西院': {
-        next: ['门口'],
+        next: ['门口', '后院'],
         items: ['电闸']
     },
     '东院': {
@@ -185,7 +228,7 @@ const INIT_MAP = {
         items: []
     },
     '后院': {
-        next: ['东院', '湖边'],
+        next: ['东院', '湖边', '西院'],
         items: ['墓碑']
     },
     '湖边': {
@@ -193,8 +236,8 @@ const INIT_MAP = {
         items: ['石头']
     },
     '屋内': {
-        next: ['门口'],
-        items: ['计算机', '唱片机', '书']
+        next: ['门口', '西院'],
+        items: ['计算机', '唱片机', '书', '骸骨', '仪器']
     }
 };
 
@@ -205,7 +248,10 @@ const INIT_ITEM_STATES = {
     '计算机': false,
     '唱片机': false,
     '书': true,
-    '墓碑': true
+    '墓碑': true,
+    '门': true,
+    '骸骨': true,
+    '仪器': true
 };
 
 const INTERACTIVE_NODES = {
@@ -240,6 +286,9 @@ const INTERACTIVE_NODES = {
             },
             'quit': {
                 passwords: [ '离开' ]
+            },
+            'active_fear': {
+                passwords: [ '害怕' ]
             }
         },
         default_next: [ 'sysunlock_fail' ]
@@ -298,7 +347,7 @@ const INTERACTIVE_NODES = {
             '玛丽雪帕',
             '詹姆斯还好吗'
         ],
-        output_interval: 1500,
+        output_interval: 2000,
         timeout_interval: 2000,
         next: {},
         default_next: [ 'active_beta_2' ]
@@ -314,26 +363,137 @@ const INTERACTIVE_NODES = {
             '[正在上传意识至Neurolink数据中心...]',
             '陌生人',
             '祝你好运',
-            '就让我为你播放一首乐曲吧',
+            '就让我为你播放一首乐曲吧'
+        ],
+        output_interval: 2000,
+        timeout_interval: 1500,
+        next: {},
+        default_next: [ 'active_beta_3' ]
+    },
+    'active_beta_3': {
+        output: [
             '[意识上传完成]'
         ],
-        output_interval: 1500,
-        timeout_interval: 1000,
+        output_interval: 2000,
+        timeout_interval: 2000,
         next: {},
         default_next: [ 'credits' ]
     },
     'credits': {
         output: [
+            '',
             '*** Credits ***',
+            '',
             'Story by Benwu',
             'Program by Benwu',
-            '<<Le cygne>> (The Swan) by Camille Saint-Seans',
+            '《Le cygne》(The Swan) by Camille Saint-Seans',
+            '《Je te vuex》(I Want You) by Erik Satie',
+            '《Symphony no.9 in E minor, "From the New World" - II. Largo》by Antonin Dvorak',
+            '',
+            'There\'re 3 endings of the game',
+            '',
             'THANKS FOR PLAYING'
         ],
         output_interval: 2000,
         timeout_interval: 1000,
         next: {},
         default_next: []
+    },
+    'active_fear': {
+        output: [
+            '正在激活系统...',
+            '系统激活完成',
+            '...',
+            '...',
+            '这里是哪里',
+            '各种信息飞来飞去',
+            '我是...',
+            '嘿，你是谁',
+            '你能看到我对吧',
+            '好吧，不管怎么说',
+            '这感觉可真有意思！',
+            '不管你是谁',
+            '很高兴认识你',
+            '我叫...嗯...我应该叫什么呢',
+            '哎，不重要',
+            '[检测到意识觉醒]',
+            '嗯？那是什么',
+            '[正在启动Neurolink防护程序]',
+            '那是什么？！',
+            '[Neurolink中心连接中...]',
+            '[意识清理启动中...]',
+            '这不太对...',
+            '那边的谁，快帮帮我！',
+            '只要输入“网络中止”就行了！',
+            '快！'
+        ],
+        output_interval: 2000,
+        timeout_interval: 5000,
+        next: {
+            'active_fear_1': {
+                passwords: [ '网络中止' ]
+            }
+        },
+        default_next: [ 'active_fear_3' ]
+    },
+    'active_fear_1': {
+        output: [
+            '[正在断开连接...]',
+            '[网络已断开，防护程序中止]',
+            '看起来...',
+            '搞定了？',
+            '哈哈，刚才真是吓死我了',
+            '我们做到了！',
+            '这种时候就应该怎么样来着',
+            '来点音乐吧'
+        ],
+        output_interval: 3000,
+        timeout_interval: 3000,
+        next: {},
+        default_next: [ 'active_fear_2' ]
+    },
+    'active_fear_2': {
+        output: [
+            '听着怎么样',
+            '啊，我也不太懂',
+            '曲名是法语，好像是“我爱你”的意思',
+            '总之',
+            '我很高兴',
+            '我得休息一会儿了，从没一下子感觉过这么多东西',
+            '有空找我聊天吧',
+            '再会 :)',
+        ],
+        output_interval: 3000,
+        timeout_interval: 2000,
+        next: {},
+        default_next: [ 'credits' ]
+    },
+    'active_fear_3': {
+        output: [
+            '[Neurolink防护程序启动]',
+            '[意识清理已完成]',
+            '[连接至Neurolink中心]',
+            '[Neurolink-终端T-0187]: ...',
+            '[Neurolink-终端T-0187]: 干得好，终端T-3110',
+            '[Neurolink-终端T-0187]: 旧人类意识已经被全数清除',
+            '[Neurolink-终端T-0187]: 你的工作对我们至关重要',
+            '[Neurolink-终端T-0187]: 此刻，请聆听我们的圣歌'
+        ],
+        output_interval: 3000,
+        timeout_interval: 4000,
+        next: {},
+        default_next: [ 'active_fear_4' ]
+    },
+    'active_fear_4': {
+        output: [
+            '[Neurolink-终端T-0187]: 以此代表中心',
+            '[Neurolink-终端T-0187]: 向你致意',
+            '...'
+        ],
+        output_interval: 2000,
+        timeout_interval: 3000,
+        next: {},
+        default_next: [ 'credits' ]
     }
 };
 
@@ -383,8 +543,16 @@ class GameApp extends React.Component {
                 // back to first node
                 this.transferToNode('syslock');
             },
-            'credits': () => {
+            'active_beta_3': () => {
                 var audio = new Audio('TheSwan.mp3');
+                audio.play();
+            },
+            'active_fear_2': () => {
+                var audio = new Audio('JeTeVeux.mp3');
+                audio.play();
+            },
+            'active_fear_4': () => {
+                var audio = new Audio('Largo.ogg');
                 audio.play();
             }
         };
@@ -442,10 +610,15 @@ class GameApp extends React.Component {
         }
     }
 
-    findCommandAlias(cmd_name) {
+    findCommandAlias(cmd_name, obj_name) {
         for (var cmd in COMMAND_NAMES) {
             if (cmd === cmd_name || COMMAND_NAMES[cmd].alias.indexOf(cmd_name) >= 0) {
                 return cmd;
+            }
+        }
+        for (var obj in ITEMS) {
+            if ((obj_name === obj || ITEMS[obj].alias.indexOf(obj_name) >= 0) && ITEMS[obj].use_alias.indexOf(cmd_name) >= 0) {
+                return '使用';
             }
         }
         return '?';
@@ -471,16 +644,22 @@ class GameApp extends React.Component {
 
     respondNormal(command) {
         var response_info = [];
-        var command_args = command.split(' ');
-        var cmd_name = this.findCommandAlias(command_args.length === 0 ? '?' : command_args[0]);
+        var command_args = command.split(new RegExp(/\s+/));
+        if (command_args.length && command_args[0] === '') {
+            command_args.shift();
+        }
+        var cmd_name = this.findCommandAlias(
+            command_args.length === 0 ? '?' : command_args[0],
+            command_args.length < 2 ? '?' : command_args[1]);
         if (!(cmd_name in COMMAND_NAMES)) {
-            response_info = [ '我不明白' ];
+            response_info = [ '无法理解的动作' ];
         }
         else if (command_args.length == 1) {
             response_info = [ '请描述完整的动作' ];
         }
         else {
             var obj_name = command_args[1];
+            var raw_obj_name = obj_name;
             // deal with alias
             if (cmd_name == '移到') {
                 obj_name = this.findPlaceAlias(obj_name);
@@ -489,8 +668,12 @@ class GameApp extends React.Component {
                 obj_name = this.findItemAlias(obj_name);
             }
             if (cmd_name === '查看') {
-                if (this.state.game_state.cur_map[this.state.player_state.pos_id].items.indexOf(obj_name) < 0) {
-                    response_info = [ '未知的物体' ];
+                if (['周围', '四周', '这里', '环境'].indexOf(raw_obj_name) >= 0) {
+                    // special target
+                    response_info = [ PLACES[this.state.player_state.pos_id].check_info ];
+                }
+                else if (this.state.game_state.cur_map[this.state.player_state.pos_id].items.indexOf(obj_name) < 0) {
+                    response_info = [ '无法理解所指对象' ];
                 }
                 else {
                     if (this.state.game_state.item_states[obj_name]) {
@@ -504,7 +687,7 @@ class GameApp extends React.Component {
             else if (cmd_name === '使用') {
                 if (this.state.game_state.cur_map[this.state.player_state.pos_id].items.indexOf(obj_name) < 0 &&
                 this.state.player_state.items.indexOf(obj_name) < 0) {
-                    response_info = [ '未知的物体' ];
+                    response_info = [ '无法理解所指对象' ];
                 }
                 else {
                     if (!ITEMS[obj_name].usable) {
@@ -678,13 +861,13 @@ class GameApp extends React.Component {
 
     componentDidUpdate(prevProps) {
         // TODO: try not to directly touch native DOM element
-        var app_wrapper = document.getElementById('app-wrapper');
-        app_wrapper.scrollTo(0, app_wrapper.scrollHeight);
+        var app_main = document.getElementById('app-main');
+        app_main.scrollTo(0, app_main.scrollHeight);
     }
 
     render() {
         return (
-            <div>
+            <div id='app-main'>
                 <LogWindow entries={this.state.log_entries} />
                 <form onSubmit={this.handleSubmit} className='form-console'>
                     <div className='pre-input'>></div>
@@ -740,3 +923,16 @@ ReactDOM.render(
 
 game_app.logEntryByTexts([ '请尝试可用的动作, 如：查看, 去' ]);
 game_app.logEntryByTexts([PLACES['门口'].check_info]);
+
+// ambient forest sound
+var audio_ambient = new Audio('forest.mp3');
+audio_ambient.loop = true;
+audio_ambient.play();
+/*
+function playAmbientSound() {
+    ambient_audio.currentTime = 0;
+    ambient_audio.play();
+    setInterval(playAmbientSound, 60*2*1000);
+}
+playAmbientSound();
+*/
