@@ -179,7 +179,7 @@ const ITEMS = {
 
 const PLACES = {
     '门口': {
-        check_info: '这是屋子的门口，门上锁着锈蚀的锁。屋子对着南面，左手边是西院，右手边是东院。周围树林环抱，时有鸟鸣，人类的痕迹从这里看已经十分稀少。',
+        check_info: '这是屋子的门口，门上有锈蚀的锁。屋子对着南面，左手边是西院，右手边是东院。周围树林环抱，时有鸟鸣，人类的痕迹从这里看已经十分稀少。',
         pre_req: {},
         alias: [ '正门', '大门', '门', '入口', '南门' ]
     },
@@ -544,16 +544,16 @@ class GameApp extends React.Component {
                 this.transferToNode('syslock');
             },
             'active_beta_3': () => {
-                var audio = new Audio('TheSwan.mp3');
-                audio.play();
+                //var audio = new Audio('media/TheSwan.mp3');
+                audio_e1.play();
             },
             'active_fear_2': () => {
-                var audio = new Audio('JeTeVeux.mp3');
-                audio.play();
+                //var audio = new Audio('media/JeTeVeux.mp3');
+                audio_e2.play();
             },
             'active_fear_4': () => {
-                var audio = new Audio('Largo.ogg');
-                audio.play();
+                //var audio = new Audio('media/Largo.ogg');
+                audio_e3.play();
             }
         };
         game_app = this;
@@ -676,7 +676,21 @@ class GameApp extends React.Component {
                     response_info = [ '无法理解所指对象' ];
                 }
                 else {
-                    if (this.state.game_state.item_states[obj_name]) {
+                    // update item status
+                    // TODO: recursively update item status when 'used'
+                    var can_use = true;
+                    var closest_bad_item = '';
+                    // check pre-req done
+                    for (var pre_item in ITEMS[obj_name].pre_req ) {
+                        if (!this.state.game_state.item_states[pre_item]) {
+                            closest_bad_item = pre_item;
+                            can_use = false;
+                            break;
+                        }
+                    }
+                    var is_on = (this.state.game_state.item_states[obj_name] || 
+                        (can_use && Object.keys(ITEMS[obj_name].pre_req).length));
+                    if (is_on) {
                         response_info = [ ITEMS[obj_name].check_info.on ];
                     }
                     else {
@@ -862,7 +876,9 @@ class GameApp extends React.Component {
     componentDidUpdate(prevProps) {
         // TODO: try not to directly touch native DOM element
         var app_main = document.getElementById('app-main');
-        app_main.scrollTo(0, app_main.scrollHeight);
+        if (app_main !== null) {
+            app_main.scrollTop = app_main.scrollHeight;
+        }
     }
 
     render() {
@@ -924,10 +940,25 @@ ReactDOM.render(
 game_app.logEntryByTexts([ '请尝试可用的动作, 如：查看, 去' ]);
 game_app.logEntryByTexts([PLACES['门口'].check_info]);
 
-// ambient forest sound
-var audio_ambient = new Audio('forest.mp3');
+// load sounds
+var audio_ambient = new Audio('media/forest.mp3');
 audio_ambient.loop = true;
-audio_ambient.play();
+var audio_e1 = new Audio('media/TheSwan.mp3');
+var audio_e2 = new Audio('media/JeTeVeux.mp3');
+var audio_e3 = new Audio('media/Largo.mp3');
+var audio_loaded = false;
+document.getElementById('app-wrapper').addEventListener('click', function(){
+    if (!audio_loaded) {
+        audio_e1.play();
+        audio_e1.pause();
+        audio_e2.play();
+        audio_e2.pause();
+        audio_e3.play();
+        audio_e3.pause();
+        audio_ambient.play();
+    }
+    audio_loaded = true;
+});
 /*
 function playAmbientSound() {
     ambient_audio.currentTime = 0;
