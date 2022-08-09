@@ -1,10 +1,18 @@
 // out: main.css
 
+@screen-back-color: transparent;
+
+@screen-pos-x: 650px;
+@screen-pos-y: 120px;
+@screen-width: 300px;
+@screen-height: 220px;
+
 .console-text {
-    color: #00ff00;
-    background-color: black;
+    color:#aaff22;
+    background-color: @screen-back-color;
     font-family: sans-serif;
     font-size: 15px;
+    .chromatic;
 }
 
 *:focus {
@@ -12,21 +20,30 @@
 }
 
 body {
-    background-color: black;
+    background-color: @screen-back-color;
     overflow: hidden;
     #app-wrapper {
-        height: 250px;
-        width: 340px;
-        overflow-y: scroll;
+        height: @screen-height;
+        width: @screen-width;
+        overflow: hidden;
         position: absolute;
-        left: 700px;
-        top: 190px;
-        background-color: black;
+        left: @screen-pos-x;
+        top: @screen-pos-y;
+        background-color: @screen-back-color;
+        div#app-main {
+            overflow-y: scroll;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: -17px;
+        }
     }
     div.window-log {
         div.entry-log {
             .console-text;
             word-wrap: break-word;
+            min-height: 1.5em;
         }
     }
     div.pre-input {
@@ -39,5 +56,20 @@ body {
         display: inline-block;
         margin: 0;
         padding: 0;
+        width: 90%;
     }
+    img#img-scanlines {
+        position: absolute;
+        left: calc(@screen-pos-x - 15px);
+        top: calc(@screen-pos-y - 15px);
+        width: calc(@screen-width + 30px);
+        pointer-events: none;
+        opacity: 0.2;
+    }
+}
+
+// chromatic abberation effect
+.chromatic {
+    color: rgba(100, 255, 0, 0.8);
+    text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
 }

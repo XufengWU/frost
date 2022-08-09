@@ -1,46 +1,76 @@
 .console-text {
-  color: #00ff00;
-  background-color: black;
+  color: #aaff22;
+  background-color: transparent;
   font-family: sans-serif;
   font-size: 15px;
+  color: rgba(100, 255, 0, 0.8);
+  text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
 }
 *:focus {
   outline: none;
 }
 body {
-  background-color: black;
+  background-color: transparent;
   overflow: hidden;
 }
 body #app-wrapper {
-  height: 250px;
-  width: 340px;
+  height: 220px;
+  width: 300px;
+  overflow: hidden;
+  position: absolute;
+  left: 650px;
+  top: 120px;
+  background-color: transparent;
+}
+body #app-wrapper div#app-main {
   overflow-y: scroll;
   position: absolute;
-  left: 700px;
-  top: 190px;
-  background-color: black;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: -17px;
 }
 body div.window-log div.entry-log {
-  color: #00ff00;
-  background-color: black;
+  color: #aaff22;
+  background-color: transparent;
   font-family: sans-serif;
   font-size: 15px;
+  color: rgba(100, 255, 0, 0.8);
+  text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
   word-wrap: break-word;
+  min-height: 1.5em;
 }
 body div.pre-input {
   display: inline-block;
-  color: #00ff00;
-  background-color: black;
+  color: #aaff22;
+  background-color: transparent;
   font-family: sans-serif;
   font-size: 15px;
+  color: rgba(100, 255, 0, 0.8);
+  text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
 }
 body #input-console {
-  color: #00ff00;
-  background-color: black;
+  color: #aaff22;
+  background-color: transparent;
   font-family: sans-serif;
   font-size: 15px;
+  color: rgba(100, 255, 0, 0.8);
+  text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
   border-style: none;
   display: inline-block;
   margin: 0;
   padding: 0;
+  width: 90%;
+}
+body img#img-scanlines {
+  position: absolute;
+  left: calc(635px);
+  top: calc(105px);
+  width: calc(330px);
+  pointer-events: none;
+  opacity: 0.2;
+}
+.chromatic {
+  color: rgba(100, 255, 0, 0.8);
+  text-shadow: 0 0 1px greenyellow, 2px 0px 2px violet, -2px 0px 2px lightseagreen;
 }
